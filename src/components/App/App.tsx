@@ -15,10 +15,11 @@ const App = () => {
   }, [activeItem]);
 
   const originalSiteLink = useMemo(() => {
-    if (!activeItem.length) {
+    const cleanActiveItem = activeItem.filter(Boolean);
+    if (!cleanActiveItem.length) {
       return null;
     }
-    return `https://tailwindui.com/components/${activeItem.join('/')}`;
+    return `https://tailwindui.com/components/${cleanActiveItem.join('/')}`;
   }, [activeItem]);
 
   useEffect(() => {
