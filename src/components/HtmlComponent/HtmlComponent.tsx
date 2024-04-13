@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cn from 'clsx';
-import { nanoid } from 'nanoid';
 import hljs from 'highlight.js';
+import { nanoid } from 'nanoid';
 import 'highlight.js/styles/vs.css';
 
 const template = `\
@@ -25,20 +25,18 @@ const template = `\
     window.parent.postMessage({ frameHeight: height, pageId: '{{pageId}}' }, '*');
   }
 
-  // Запускаем sendHeight при первой загрузке и при изменении размеров окна
   window.onload = sendHeight;
   window.onresize = sendHeight;
 
-  // Наблюдаем за изменениями в DOM, которые могут изменять высоту контента
   const observer = new MutationObserver((mutations) => {
     sendHeight();
   });
 
   observer.observe(document.body, {
-    childList: true,   // Наблюдение за прямыми потомками
-    subtree: true,     // Наблюдение за всеми потомками
-    attributes: true,  // Наблюдение за атрибутами
-    attributeFilter: ['style', 'class']  // Фильтруем изменения только для стилей и классов
+    childList: true,   
+    subtree: true,     
+    attributes: true,  
+    attributeFilter: ['style', 'class'] 
   });
 </script>
 </html>
@@ -103,10 +101,10 @@ const HtmlComponent = ({ className, name, path, ...props }: Props) => {
   }, []);
 
   useEffect(() => {
-    if(htmlContent){
+    if (htmlContent) {
       hljs.highlightElement(codeElRef.current!);
     }
-  }, [htmlContent])
+  }, [htmlContent]);
 
   return (
     <div
@@ -135,7 +133,9 @@ const HtmlComponent = ({ className, name, path, ...props }: Props) => {
 
         <div className={cn('overflow-auto min-h-[200px]', { hidden: mode === 'preview' })}>
           <pre className="overflow-auto whitespace-pre-wrap max-w-full">
-            <code className="language-html" ref={codeElRef}>{htmlContent}</code>
+            <code className="language-html" ref={codeElRef}>
+              {htmlContent}
+            </code>
           </pre>
         </div>
       </div>
