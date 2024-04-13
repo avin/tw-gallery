@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { get } from 'lodash-es';
 import directoryTree from 'virtual:directory-tree';
 import FilesTree from '@/components/FilesTree/FilesTree.tsx';
 import HtmlComponent from '@/components/HtmlComponent/HtmlComponent.tsx';
 
 const App = () => {
-  const [category, setCategory] = useState<Record<string, string> | null>(null);
-  const [activeItem, activeActiveItem] = useState<string[]>([]);
+  const [activeItem, activeActiveItem] = useState<string[]>(window.location.hash.replace(/^#/, '').split('/'));
+
+  const category = useMemo(() => {
+    const f = get(directoryTree, activeItem);
+    return f;
+  }, [activeItem]);
 
   const originalSiteLink = `https://tailwindui.com/components/${activeItem.join('/')}`;
+
+  useEffect(() => {
+    window.location.hash = activeItem.join('/');
+  }, [activeItem]);
 
   return (
     <div className="grid grid-cols-[auto,1fr]">
@@ -15,8 +24,7 @@ const App = () => {
         <div className="p-4 overflow-y-auto max-h-[100vh]">
           <FilesTree
             tree={directoryTree}
-            onSelectCategory={(category, activeItem) => {
-              setCategory(category);
+            onSelectCategory={(activeItem) => {
               activeActiveItem(activeItem);
             }}
             activeItem={activeItem}

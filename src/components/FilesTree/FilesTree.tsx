@@ -5,7 +5,7 @@ import { arraysEqual } from '@/utils/array.ts';
 
 interface Props extends React.ComponentPropsWithoutRef<'div'> {
   tree: DirectoryTree;
-  onSelectCategory: (c: Record<string, string>, a: string[]) => void;
+  onSelectCategory: (a: string[]) => void;
   parent?: string[];
   activeItem: string[];
 }
@@ -33,7 +33,7 @@ const FilesTree = ({
                 )}
                 <div className="font-bold pl-1">{key}</div>
                 <div className="pl-2 ml-2 relative">
-                  <div className="w-[1px] h-[calc(100%-16px)] bg-gray-400 absolute left-0"/>
+                  <div className="w-[1px] h-[calc(100%-16px)] bg-gray-400 absolute left-0" />
                   <FilesTree
                     tree={item}
                     onSelectCategory={onSelectCategory}
@@ -60,7 +60,7 @@ const FilesTree = ({
                 >
                   <button
                     type="button"
-                    onClick={() => onSelectCategory(item as Record<string, string>, path)}
+                    onClick={() => onSelectCategory(path)}
                     className="w-full text-left h-full p-1"
                   >
                     {key}
